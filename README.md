@@ -14,5 +14,6 @@ Groq (gpt-oss-120b) · FAISS · LangChain · LangGraph · MCP · SQLite · Strea
     source .venv/bin/activate
     pip install -r requirements.txt
     python scripts/seed_db.py   # builds data/technova.db from data/schema.sql
+    PYTHONPATH=src python -m technova.rag.indexer   # builds the FAISS index from data/documents
 
 Copy `.env.example` to `.env` and fill in your keys.
