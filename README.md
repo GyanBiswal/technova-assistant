@@ -3,7 +3,7 @@
 An AI assistant that answers employee questions using company documents (RAG)
 and company data (MCP tools), orchestrated with LangGraph.
 
-**Status:** Work in progress (Part 1: project setup)
+**Status:** Work in progress (Part 4: grounded RAG answers working)
 
 ## Planned stack
 Groq (gpt-oss-120b) · FAISS · LangChain · LangGraph · MCP · SQLite · Streamlit
@@ -15,5 +15,6 @@ Groq (gpt-oss-120b) · FAISS · LangChain · LangGraph · MCP · SQLite · Strea
     pip install -r requirements.txt
     python scripts/seed_db.py   # builds data/technova.db from data/schema.sql
     PYTHONPATH=src python -m technova.rag.indexer   # builds the FAISS index from data/documents
+    PYTHONPATH=src python -m technova.rag.answerer "How many sick leave days do I get?"
 
 Copy `.env.example` to `.env` and fill in your keys.
