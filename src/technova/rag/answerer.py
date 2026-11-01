@@ -2,6 +2,7 @@ import sys
 
 from technova.llm.groq_client import get_llm
 from technova.rag.retriever import load_index
+from technova.docs_tools.summarizer import list_document_names
 
 SYSTEM_PROMPT = """You are the internal knowledge assistant for TechNova Solutions.
 Answer the question using ONLY the context provided below.
@@ -16,9 +17,16 @@ def format_context(docs) -> str:
     )
 
 
-def answer_question(question: str, k: int = 3) -> dict:
+def answer_question(question: str, k: int = 3, source: str | None = None) -> dict:
+    if source and source not in list_document_names():
+        raise ValueError(f"Unknown document: {source}")
     store = load_index()
-    docs = store.similarity_search(question, k=k)
+    docs = store.similarity_search(
+        question,
+        k=k,
+        filter={"source": source} if source else None,
+        fetch_k=100,
+    )
     context = format_context(docs)
 
     llm = get_llm()
@@ -35,8 +43,10 @@ def answer_question(question: str, k: int = 3) -> dict:
 
 
 if __name__ == "__main__":
-    question = " ".join(sys.argv[1:]) or "How many sick leave days do I get?"
-    result = answer_question(question)
+    args = sys.argv[1:]
+    source = args.pop() if args and args[-1].endswith(".md") else None
+    question = " ".join(args) or "How many sick leave days do I get?"
+    result = answer_question(question, source=source)
     print(f"Question: {question}\n")
     print(result["answer"])
     print(f"\n(retrieved from: {', '.join(result['retrieved_sources'])})")
