@@ -12,6 +12,7 @@ __pycache__/
 
 # Generated files (can be rebuilt)
 data/faiss_index/
+data/technova.db
 
 # macOS and editor files
 .DS_Store
