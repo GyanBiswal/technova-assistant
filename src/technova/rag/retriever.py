@@ -4,8 +4,10 @@ from langchain_community.vectorstores import FAISS
 
 from technova.rag.embedder import get_embeddings
 from technova.rag.indexer import INDEX_DIR
+from functools import lru_cache
 
 
+@lru_cache(maxsize=1)
 def load_index() -> FAISS:
     return FAISS.load_local(
         str(INDEX_DIR),

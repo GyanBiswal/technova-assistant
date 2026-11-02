@@ -3,7 +3,7 @@
 An AI assistant that answers employee questions using company documents (RAG)
 and company data (MCP tools), orchestrated with LangGraph.
 
-**Status:** Part 6: MCP server with read-only company data tools
+**Status:** Part 9: tool-using agent with step, call, and token limits
 
 ## Planned stack
 Groq (gpt-oss-120b) · FAISS · LangChain · LangGraph · MCP · SQLite · Streamlit
@@ -19,5 +19,7 @@ Groq (gpt-oss-120b) · FAISS · LangChain · LangGraph · MCP · SQLite · Strea
     PYTHONPATH=src python -m technova.docs_tools.doc_search "work from home"
     PYTHONPATH=src python -m technova.docs_tools.summarizer leave_policy.md
     PYTHONPATH=src python scripts/mcp_smoke_test.py   # checks all MCP tools against the seeded data
+    PYTHONPATH=src python -m technova.graph.agent "Who leads Project Atlas, and who is their manager?"
+    PYTHONPATH=src python scripts/agent_check.py   # takes ~5 minutes
 
 Copy `.env.example` to `.env` and fill in your keys.
